@@ -123,13 +123,13 @@ static ssize_t pac1934_show_value(struct device *dev,
 	return snprintf(buf, PAGE_SIZE, "%d\n", value);
 }
 
-static SENSOR_DEVICE_ATTR(vbus0, S_IRUGO, pac1934_show_value, NULL,
+static SENSOR_DEVICE_ATTR(in0_input, S_IRUGO, pac1934_show_value, NULL,
 			  PAC1934_VBUS0_REGISTER);
-static SENSOR_DEVICE_ATTR(vbus1, S_IRUGO, pac1934_show_value, NULL,
+static SENSOR_DEVICE_ATTR(in1_input, S_IRUGO, pac1934_show_value, NULL,
 			  PAC1934_VBUS1_REGISTER);
-static SENSOR_DEVICE_ATTR(vbus2, S_IRUGO, pac1934_show_value, NULL,
+static SENSOR_DEVICE_ATTR(in2_input, S_IRUGO, pac1934_show_value, NULL,
 			  PAC1934_VBUS2_REGISTER);
-static SENSOR_DEVICE_ATTR(vbus3, S_IRUGO, pac1934_show_value, NULL,
+static SENSOR_DEVICE_ATTR(in3_input, S_IRUGO, pac1934_show_value, NULL,
 			  PAC1934_VBUS3_REGISTER);
 static SENSOR_DEVICE_ATTR(vbus0avg, S_IRUGO, pac1934_show_value, NULL,
 			  PAC1934_VBUS0_AVG_REGISTER);
@@ -162,10 +162,10 @@ static SENSOR_DEVICE_ATTR(cur3avg, S_IRUGO, pac1934_show_value, NULL,
 
 
 static struct attribute *pac1934_attrs[] = {
-	&sensor_dev_attr_vbus0.dev_attr.attr,
-	&sensor_dev_attr_vbus1.dev_attr.attr,
-	&sensor_dev_attr_vbus2.dev_attr.attr,
-	&sensor_dev_attr_vbus3.dev_attr.attr,
+	&sensor_dev_attr_in0_input.dev_attr.attr,
+	&sensor_dev_attr_in1_input.dev_attr.attr,
+	&sensor_dev_attr_in2_input.dev_attr.attr,
+	&sensor_dev_attr_in3_input.dev_attr.attr,
 	&sensor_dev_attr_vbus0avg.dev_attr.attr,
 	&sensor_dev_attr_vbus1avg.dev_attr.attr,
 	&sensor_dev_attr_vbus2avg.dev_attr.attr,
