@@ -109,26 +109,26 @@ static ssize_t emc1704_show_value(struct device *dev,
 	return snprintf(buf, PAGE_SIZE, "%d\n", value);
 }
 
-static SENSOR_DEVICE_ATTR(internal_temp, S_IRUGO, emc1704_show_value, NULL,
+static SENSOR_DEVICE_ATTR(temp0_input, S_IRUGO, emc1704_show_value, NULL,
 			  EMC1704_INTERNAL_TEMP);
-static SENSOR_DEVICE_ATTR(external1_temp, S_IRUGO, emc1704_show_value, NULL,
+static SENSOR_DEVICE_ATTR(temp1_input, S_IRUGO, emc1704_show_value, NULL,
 			  EMC1704_EXTERNAL1_TEMP);
-static SENSOR_DEVICE_ATTR(external2_temp, S_IRUGO, emc1704_show_value, NULL,
+static SENSOR_DEVICE_ATTR(temp2_input, S_IRUGO, emc1704_show_value, NULL,
 				EMC1704_EXTERNAL2_TEMP);
-static SENSOR_DEVICE_ATTR(external3_temp, S_IRUGO, emc1704_show_value, NULL,
+static SENSOR_DEVICE_ATTR(temp3_input, S_IRUGO, emc1704_show_value, NULL,
 				EMC1704_EXTERNAL3_TEMP);
-static SENSOR_DEVICE_ATTR(source_voltage, S_IRUGO, emc1704_show_value, NULL,
+static SENSOR_DEVICE_ATTR(in0_input, S_IRUGO, emc1704_show_value, NULL,
 			  EMC1704_SOURCE_VOLT_REGISTER);
-static SENSOR_DEVICE_ATTR(sense_voltage, S_IRUGO, emc1704_show_value, NULL,
+static SENSOR_DEVICE_ATTR(in1_input, S_IRUGO, emc1704_show_value, NULL,
 			  EMC1704_SENSE_VOLT_REGISTER);
 
 static struct attribute *emc1704_attrs[] = {
-	&sensor_dev_attr_internal_temp.dev_attr.attr,
-	&sensor_dev_attr_external1_temp.dev_attr.attr,
-	&sensor_dev_attr_external2_temp.dev_attr.attr,
-	&sensor_dev_attr_external3_temp.dev_attr.attr,
-	&sensor_dev_attr_source_voltage.dev_attr.attr,
-	&sensor_dev_attr_sense_voltage.dev_attr.attr,
+	&sensor_dev_attr_temp0_input.dev_attr.attr,
+	&sensor_dev_attr_temp1_input.dev_attr.attr,
+	&sensor_dev_attr_temp2_input.dev_attr.attr,
+	&sensor_dev_attr_temp3_input.dev_attr.attr,
+	&sensor_dev_attr_in0_input.dev_attr.attr,
+	&sensor_dev_attr_in1_input.dev_attr.attr,
 	NULL,
 };
 ATTRIBUTE_GROUPS(emc1704);
