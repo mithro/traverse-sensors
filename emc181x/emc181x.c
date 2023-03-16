@@ -11,6 +11,7 @@
 #include <linux/err.h>
 #include <linux/hwmon.h>
 #include <linux/hwmon-sysfs.h>
+#include <linux/version.h>
 #include <linux/i2c.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
@@ -148,8 +149,7 @@ static const struct hwmon_chip_info emc181x_chip_info = {
 	.info = emc181x_info,
 };
 
-static int emc181x_i2c_probe (struct i2c_client *i2c,
-			     const struct i2c_device_id *id)
+static int emc181x_i2c_probe (struct i2c_client *i2c)
 {
 	//int ret;
 	struct device *hwmon_dev;
@@ -205,7 +205,11 @@ static struct i2c_driver emc181x_i2c_driver = {
 	.driver = {
 		.name = "emc181x",
 	},
-	.probe    = emc181x_i2c_probe,
+	#if LINUX_VERSION_CODE <= KERNEL_VERSION(6,3,0)
+	.probe_new	= emc181x_i2c_probe,
+	#else
+	.probe		= emc181x_i2c_probe,
+	#endif
 	.id_table = emc181x_i2c_id,
 };
 

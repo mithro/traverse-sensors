@@ -16,6 +16,7 @@
 #include <linux/i2c.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/version.h>
 
 #define PAC1934_REFRESH_REGISTER 0x00
 
@@ -183,8 +184,7 @@ static struct attribute *pac1934_attrs[] = {
 
 ATTRIBUTE_GROUPS(pac1934);
 
-static int pac1934_i2c_probe(struct i2c_client *i2c,
-			     const struct i2c_device_id *id)
+static int pac1934_i2c_probe(struct i2c_client *i2c)
 {
 	int ret;
 	struct device *hwmon_dev;
@@ -233,7 +233,11 @@ static struct i2c_driver pac1934_i2c_driver = {
 	.driver = {
 		.name = "pac1934",
 	},
-	.probe    = pac1934_i2c_probe,
+	#if LINUX_VERSION_CODE <= KERNEL_VERSION(6,3,0)
+	.probe_new	= pac1934_i2c_probe,
+	#else
+	.probe		= pac1934_i2c_probe,
+	#endif
 	.id_table = pac1934_i2c_id,
 };
 

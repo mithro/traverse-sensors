@@ -14,6 +14,7 @@
 #include <linux/i2c.h>
 #include <linux/kernel.h>
 #include <linux/module.h>
+#include <linux/version.h>
 
 /* High side only for now */
 #define EMC1704_INTERNAL_TEMP 0x38
@@ -133,8 +134,7 @@ static struct attribute *emc1704_attrs[] = {
 };
 ATTRIBUTE_GROUPS(emc1704);
 
-static int emc1704_i2c_probe(struct i2c_client *i2c,
-			     const struct i2c_device_id *id)
+static int emc1704_i2c_probe(struct i2c_client *i2c)
 {
 	//int ret;
 	struct device *hwmon_dev;
@@ -161,7 +161,11 @@ static struct i2c_driver emc17xx_i2c_driver = {
 	.driver = {
 		.name = "emc1704",
 	},
-	.probe    = emc1704_i2c_probe,
+	#if LINUX_VERSION_CODE <= KERNEL_VERSION(6,3,0)
+	.probe_new	= emc1704_i2c_probe,
+	#else
+	.probe		= emc1704_i2c_probe,
+	#endif
 	.id_table = emc1704_i2c_id,
 };
 

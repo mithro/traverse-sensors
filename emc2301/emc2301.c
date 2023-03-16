@@ -353,8 +353,7 @@ static int emc2301_enable_rpm_control(struct emc2301_data *data, u16 fan_dev, bo
 	return ret;
 };
 
-static int emc2301_i2c_probe (struct i2c_client *i2c,
-			     const struct i2c_device_id *id)
+static int emc2301_i2c_probe (struct i2c_client *i2c)
 {
 	struct device *hwmon_dev;
 	struct device_node *of_node = i2c->dev.of_node;
@@ -497,7 +496,11 @@ static struct i2c_driver emc2301_i2c_driver = {
 	.driver = {
 		.name = "emc2301",
 	},
-	.probe    = emc2301_i2c_probe,
+	#if LINUX_VERSION_CODE <= KERNEL_VERSION(6,3,0)
+	.probe_new    = emc2301_i2c_probe,
+	#else
+	.probe	  = emc2301_i2c_probe
+	#endif
 	.id_table = emc2301_i2c_id,
 };
 
