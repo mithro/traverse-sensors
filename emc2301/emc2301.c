@@ -499,7 +499,7 @@ static struct i2c_driver emc2301_i2c_driver = {
 	#if LINUX_VERSION_CODE <= KERNEL_VERSION(6,3,0)
 	.probe_new    = emc2301_i2c_probe,
 	#else
-	.probe	  = emc2301_i2c_probe
+	.probe	  = emc2301_i2c_probe,
 	#endif
 	.id_table = emc2301_i2c_id,
 };
