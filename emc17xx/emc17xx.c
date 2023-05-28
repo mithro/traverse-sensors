@@ -46,27 +46,19 @@ static int emc1704_get_value(struct i2c_client *i2c, u8 reg, int *result)
 	int8_t highval;
 	uint8_t lowval;
 
-	#ifdef DEBUG
-	printk(KERN_INFO "Reading register %X\n",reg);
-	#endif
+	pr_debug("Reading register %X\n",reg);
 
 	highval = i2c_smbus_read_byte_data(i2c, reg);
-	#ifdef DEBUG
-	printk(KERN_INFO "Got value %d\n",highval);
-	#endif
+	pr_debug("Got value %d\n",highval);
 
 	lowval = i2c_smbus_read_byte_data(i2c,reg+1);
-	#ifdef DEBUG
-	printk(KERN_INFO "Got low value %d\n",lowval);
-	#endif
+	pr_debug("Got low value %d\n",lowval);
 
 	if (reg >= EMC1704_INTERNAL_TEMP && reg <= EMC1704_EXTERNAL3_TEMP) {
 		/* The low bits have a weight of .125C */
 		lowval = lowval >> 5;
 		mval = (highval * 1000) + (lowval * 125);
-		#ifdef DEBUG
-		printk(KERN_INFO "Calculated value %d\n",mval);
-		#endif
+		pr_debug("Calculated value %d\n",mval);
 		*result = mval;
 	} else if (reg == EMC1704_SOURCE_VOLT_REGISTER) {
 		tempval = (highval << 8) | lowval;
@@ -74,9 +66,7 @@ static int emc1704_get_value(struct i2c_client *i2c, u8 reg, int *result)
 		for(i=15; i>0; i--) {
 		if ((tempval & BIT(i)) == BIT(i)) {
 			mval += emc1704_source_weights[i];
-			#if DEBUG
-			printk(KERN_INFO "Bit %d Value now %d\n",i,mval);
-			#endif
+			pr_debug("Bit %d Value now %d\n",i,mval);
 		}
 		*result = mval;
 		}
