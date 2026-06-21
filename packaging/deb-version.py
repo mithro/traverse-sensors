@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Derive the Debian/DKMS package version from git.
+"""Derive the Debian/DKMS package version from ``git describe``.
 
-The version is ``0.<N>`` where N is the commit count (``git rev-list --count
-HEAD``). It increments on every commit, so apt / unattended-upgrades always sees
-a new CI build as an upgrade, and it sorts above the legacy hand-built ``0.01``
-(``0.<N>`` with N>1 compares greater than ``0.01``).
+Same *shape* as mithro/sensors2mqtt's post-release versioning, but computed
+directly from git (no setuptools_scm needed): at tag ``vX.Y`` the version is
+``X.Y``; N commits later ``X.Y.postN``. It increments on every commit, so each
+push publishes a new package. These are valid Debian versions verbatim.
 
-This value is used for BOTH the .deb version and the DKMS ``PACKAGE_VERSION``
-(``dkms.conf`` ships ``#MODULE_VERSION#``, which dh_dkms fills from the changelog;
+The value is used for BOTH the .deb version and the DKMS ``PACKAGE_VERSION``
+(``dkms.conf`` ships ``#MODULE_VERSION#``, filled by dh_dkms from the changelog;
 ``debian/rules`` installs the source to ``/usr/src/traverse-sensors-<version>``).
 Keeping them identical is what makes ``apt upgrade`` trigger a real DKMS rebuild.
 
@@ -18,6 +18,7 @@ Usage:
 from __future__ import annotations
 
 import argparse
+import re
 import subprocess
 from pathlib import Path
 
@@ -34,9 +35,19 @@ def _git(*args: str) -> str:
 
 
 def version() -> str:
+    """git-describe derived version: vX.Y -> X.Y, N commits later -> X.Y.postN."""
     try:
-        return "0." + _git("rev-list", "--count", "HEAD")
-    except Exception:  # noqa: BLE001 - any git failure -> safe fallback
+        describe = _git("describe", "--tags", "--long", "--match", "v[0-9]*")
+        m = re.match(r"^v(.+)-(\d+)-g[0-9a-f]+$", describe)
+        if m:
+            base, n = m.group(1), int(m.group(2))
+            return base if n == 0 else f"{base}.post{n}"
+    except subprocess.CalledProcessError:
+        pass
+    # No matching tag yet: fall back to a monotonic count-based version.
+    try:
+        return "0.0.post" + _git("rev-list", "--count", "HEAD")
+    except Exception:  # noqa: BLE001
         return "0.0"
 
 

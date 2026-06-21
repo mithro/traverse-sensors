@@ -1,5 +1,5 @@
-traverse-sensors (0.17) unstable; urgency=medium
+traverse-sensors (0.1) unstable; urgency=medium
 
-  * Automated build from git (ed9a1ea).
+  * Automated build from git (v0.1-0-gde3f7ef).
 
- -- Tim 'mithro' Ansell <me@mith.ro>  Sun, 21 Jun 2026 18:28:25 +0930
+ -- Tim 'mithro' Ansell <me@mith.ro>  Sun, 21 Jun 2026 18:44:01 +0930
