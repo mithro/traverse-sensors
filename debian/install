@@ -1,0 +1,5 @@
+Makefile usr/src/traverse-sensors-0.01/
+emc17xx usr/src/traverse-sensors-0.01/
+emc181x usr/src/traverse-sensors-0.01/
+emc2301 usr/src/traverse-sensors-0.01/
+pac1934 usr/src/traverse-sensors-0.01/

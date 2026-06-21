@@ -1,0 +1,22 @@
+Source: traverse-sensors
+Section: kernel
+Priority: optional
+Maintainer: Tim 'mithro' Ansell <me@mith.ro>
+Build-Depends: debhelper-compat (= 13), dh-sequence-dkms
+Standards-Version: 4.7.0
+Homepage: https://gitlab.com/traversetech/ls1088firmware/traverse-sensors
+Rules-Requires-Root: no
+
+Package: traverse-sensors-dkms
+Architecture: all
+Depends: ${misc:Depends}, dkms
+Description: Traverse Ten64 board sensor hwmon drivers (DKMS)
+ Out-of-tree Linux hwmon drivers for Traverse Ten64 (NXP LS1088A) board
+ sensors that are not (yet) in the mainline kernel:
+  * PAC1934 voltage/current power monitor
+  * EMC2301 fan controller
+  * EMC1704 and EMC1813 temperature sensors
+ .
+ The drivers bind to the firmware-declared i2c devices via the i2c id_table
+ and are built with DKMS against the running kernel, so a full custom kernel
+ is not required. Modules are rebuilt automatically on kernel upgrades.
