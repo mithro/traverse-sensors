@@ -1,5 +1,5 @@
 PACKAGE_NAME="traverse-sensors"
-PACKAGE_VERSION="0.01"
+PACKAGE_VERSION="#MODULE_VERSION#"
 MAKE="make KERNELRELEASE=${kernelver}"
 CLEAN="make clean KERNELRELEASE=${kernelver}"
 BUILT_MODULE_NAME[0]="emc181x"

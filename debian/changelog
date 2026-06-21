@@ -1,9 +1,5 @@
-traverse-sensors (0.01) unstable; urgency=medium
+traverse-sensors (0.17) unstable; urgency=medium
 
-  * Package the Traverse Ten64 board sensor hwmon drivers as a DKMS package
-    (pac1934, emc2301, emc17xx, emc181x).
-  * dkms.conf: build for the target kernel version (KERNELRELEASE=kernelver)
-    and AUTOINSTALL=yes so the modules rebuild automatically on kernel
-    upgrades.
+  * Automated build from git (ed9a1ea).
 
- -- Tim 'mithro' Ansell <me@mith.ro>  Sun, 21 Jun 2026 17:48:10 +0930
+ -- Tim 'mithro' Ansell <me@mith.ro>  Sun, 21 Jun 2026 18:28:25 +0930
