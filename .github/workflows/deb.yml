@@ -68,8 +68,6 @@ jobs:
       suites: "trixie sid"
       # Architecture: all -- one deb serves every architecture.
       architectures: "all"
-      origin: traverse-sensors
       description: "Traverse Ten64 sensor collectors"
-      keyring-name: traverse-sensors.gpg
     secrets:
       gpg-private-key: ${{ secrets.APT_GPG_PRIVATE_KEY }}
