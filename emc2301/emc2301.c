@@ -470,8 +470,14 @@ static int emc2301_i2c_probe (struct i2c_client *i2c)
 
 	if (IS_REACHABLE(CONFIG_THERMAL) && has_cooling_step && register_cdev == 1) {
 		dev_info(&i2c->dev, "registering a cooling device");
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(7,2,0)
+		/* 7.2 always uses dev->of_node; cdev_id 0 matches legacy 2-cell cooling maps */
+		data->cdev = devm_thermal_of_cooling_device_register(&i2c->dev,
+			0, "emc2301_fan", data, &emc2301_thermal_cooling_device);
+#else
 		data->cdev = devm_thermal_of_cooling_device_register(&i2c->dev,
 			of_node, "emc2301_fan", data, &emc2301_thermal_cooling_device);
+#endif
 		if (IS_ERR(data->cdev)) {
 			dev_err(&i2c->dev, "Failed to register cooling device\n");
 			return PTR_ERR(data->cdev);
